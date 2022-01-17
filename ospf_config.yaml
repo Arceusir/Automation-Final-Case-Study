@@ -1,0 +1,32 @@
+---
+- name: R1 OSPF
+  hosts: R1
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: R1 OSPF setup
+      ios_command:
+        commands:
+          - config terminal
+          - router ospf 1
+          - network 192.168.10.1 0.0.0.255 area 0
+          - network 10.0.0.1 0.0.0.3 area 0
+          - network 10.0.0.2 0.0.0.3 area 0
+      register: ospf
+
+- name: R2 OSPF
+  hosts: R2
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: R2 OSPF setup 
+      ios_command:
+        commands:
+          - config terminal
+          - router ospf 1
+          - network 192.168.10.1 0.0.0.255 area 0
+          - network 10.0.0.1 0.0.0.3 area 0
+          - network 10.0.0.2 0.0.0.3 area 0
+      register: ospf
